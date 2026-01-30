@@ -1,0 +1,63 @@
+@import 'tailwindcss';
+@import './design-tokens.css';
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #e5e5e5;
+  --muted: #737373;
+  --accent: #fafafa;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* CRITICAL: Lenis scroll overrides */
+html {
+  scroll-behavior: auto !important; /* Disable native smooth scroll - Lenis takes control */
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  user-select: none; /* Prevents text selection during scroll interactions */
+}
+
+/* Selection */
+::selection {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Smooth image rendering */
+img,
+video {
+  object-fit: cover;
+}
+
+/* Editorial link style */
+a {
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+a:hover {
+  opacity: 0.7;
+}

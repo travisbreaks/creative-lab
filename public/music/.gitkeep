@@ -1,0 +1,35 @@
+# Audio files for the Variable Sequencer
+# All files at 132 BPM
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+# THE SECTIONS (Infinite Loops) - Must be perfect loops, no tails
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# 00_intro.mp3              (16 bars) - Auto-advances or skip on scroll
+# 01_beats_come_in.mp3      (16 bars) - Auto-advances
+# 02_beats.mp3              (32 bars) - LOOP
+# 03_beats_2.mp3            (32 bars) - LOOP
+# 04_beats_progression.mp3  (32 bars) - LOOP
+# 05_main_progression.mp3   (28 bars) - LOOP
+# 06_progression_2.mp3      (30 bars) - LOOP
+# 07_progression_3.mp3      (24 bars) - LOOP
+# 08_outro.mp3              (8 bars)  - End
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+# THE BRIDGES (One-Shot Sizzles) - Include transition FX + downbeat of next
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# sizzle_01_4bars.mp3  (4 bars) - Intro → Beats Come In
+# sizzle_02_4bars.mp3  (4 bars) - Beats → Beats 2
+# sizzle_03_4bars.mp3  (4 bars) - Beats 2 → Beats & Progression
+# sizzle_04_8bars.mp3  (8 bars) - LONG BRIDGE: Beats & Progression → Main Progression
+# sizzle_05_4bars.mp3  (4 bars) - Main Progression → Progression 2
+# sizzle_06_2bars.mp3  (2 bars) - SHORT BRIDGE: Progression 2 → Progression 3
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+# NOTES
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# - The system gracefully handles missing files (will skip/auto-advance)
+# - Transitions are quantized to 4-bar grid boundaries
+# - Variable bridge lengths (2, 4, or 8 bars) are respected by the engine
