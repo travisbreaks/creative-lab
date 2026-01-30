@@ -1,0 +1,29 @@
+/* Shared Design Tokens for CODE Monorepo */
+
+:root {
+  /* Colors */
+
+  --accent-rust: #cca43b; /* Gold */
+
+  --accent-signal: #ff2a6d; /* Pink */
+
+  --accent-teal: #05d9e8; /* Cyan */
+
+  --bg-void: #080808;
+
+  --bg-panel: #111111;
+
+  --text-primary: #f8fafc;
+
+  --text-secondary: #94a3b8;
+
+  --grid-line: rgba(148, 163, 184, 0.05);
+
+  /* Fonts */
+
+  --font-display: 'Unbounded', sans-serif;
+
+  --font-code: 'JetBrains Mono', monospace;
+
+  --font-body: 'EB Garamond', serif;
+}
