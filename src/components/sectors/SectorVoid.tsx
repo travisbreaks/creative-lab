@@ -1,9 +1,9 @@
 'use client'
 
-import { useRef, useEffect, useMemo } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useEffect, useMemo, useRef } from 'react'
 import * as THREE from 'three'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -41,8 +41,7 @@ function HyperspaceStars() {
   useFrame((state, delta) => {
     if (!pointsRef.current) return
 
-    const posArray = pointsRef.current.geometry.attributes.position
-      .array as Float32Array
+    const posArray = pointsRef.current.geometry.attributes.position.array as Float32Array
 
     // Move stars toward camera (negative Z)
     for (let i = 0; i < STAR_COUNT; i++) {
@@ -76,14 +75,7 @@ function HyperspaceStars() {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial
-        color="#ffffff"
-        size={0.08}
-        transparent
-        opacity={0.6}
-        sizeAttenuation
-        depthWrite={false}
-      />
+      <pointsMaterial color="#ffffff" size={0.08} transparent opacity={0.6} sizeAttenuation depthWrite={false} />
     </points>
   )
 }
@@ -134,7 +126,7 @@ export default function SectorVoid() {
             opacity: 0,
             duration: 0.2,
           },
-          0
+          0,
         )
       }
 
@@ -147,7 +139,7 @@ export default function SectorVoid() {
           ease: 'expo.in', // Slow start, WHOOSH at the end
           duration: 1,
         },
-        0
+        0,
       )
     }, sectionRef)
 
@@ -155,18 +147,10 @@ export default function SectorVoid() {
   }, [])
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative h-screen bg-black overflow-hidden"
-      style={{ userSelect: 'none' }}
-    >
+    <section ref={sectionRef} className="relative h-screen bg-black overflow-hidden" style={{ userSelect: 'none' }}>
       {/* R3F Canvas - Hyperspace stars */}
       <div className="absolute inset-0 z-0">
-        <Canvas
-          camera={{ position: [0, 0, 10], fov: 75 }}
-          dpr={[1, 2]}
-          gl={{ antialias: false, alpha: true }}
-        >
+        <Canvas camera={{ position: [0, 0, 10], fov: 75 }} dpr={[1, 2]} gl={{ antialias: false, alpha: true }}>
           <Scene />
         </Canvas>
       </div>
@@ -175,34 +159,24 @@ export default function SectorVoid() {
       <div
         className="absolute inset-0 z-10 pointer-events-none"
         style={{
-          background:
-            'radial-gradient(circle at center, transparent 0%, black 70%)',
+          background: 'radial-gradient(circle at center, transparent 0%, black 70%)',
         }}
       />
 
       {/* Sector Header */}
       <div className="absolute top-8 left-8 z-30">
-        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">
-          Sector 4
-        </div>
-        <div className="text-[11px] tracking-[0.3em] text-red-500/70 uppercase">
-          The Void
-        </div>
+        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">Sector 4</div>
+        <div className="text-[11px] tracking-[0.3em] text-red-500/70 uppercase">The Void</div>
       </div>
 
       {/* Depth indicator */}
       <div className="absolute top-8 right-8 z-30 text-right">
-        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">
-          Critical Depth
-        </div>
+        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">Critical Depth</div>
         <div className="font-mono text-sm text-red-400/70">-800m</div>
       </div>
 
       {/* Warning text - fades out */}
-      <div
-        ref={warningRef}
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 z-20 text-center"
-      >
+      <div ref={warningRef} className="absolute top-1/4 left-1/2 -translate-x-1/2 z-20 text-center">
         <div className="text-[10px] tracking-[0.5em] text-red-500/50 uppercase animate-pulse">
           ⚠ Point of No Return ⚠
         </div>
@@ -222,8 +196,7 @@ export default function SectorVoid() {
             className="font-mono font-black text-[18vw] md:text-[20vw] leading-none tracking-[0.1em]"
             style={{
               color: 'rgba(255,255,255,0.9)',
-              textShadow:
-                '0 0 60px rgba(255,50,50,0.5), 0 0 120px rgba(255,0,0,0.3)',
+              textShadow: '0 0 60px rgba(255,50,50,0.5), 0 0 120px rgba(255,0,0,0.3)',
             }}
           >
             VOID

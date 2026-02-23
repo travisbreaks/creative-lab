@@ -1,10 +1,10 @@
-import SectorEmitter from '@/components/sectors/SectorEmitter'
-import SectorVelocity from '@/components/sectors/SectorVelocity'
-import SectorAperture from '@/components/sectors/SectorAperture'
-import SectorLattice from '@/components/sectors/SectorLattice'
-import SectorVoid from '@/components/sectors/SectorVoid'
-import SectorSingularity from '@/components/sectors/SectorSingularity'
 import Oscilloscope from '@/components/Oscilloscope'
+import SectorAperture from '@/components/sectors/SectorAperture'
+import SectorEmitter from '@/components/sectors/SectorEmitter'
+import SectorLattice from '@/components/sectors/SectorLattice'
+import SectorSingularity from '@/components/sectors/SectorSingularity'
+import SectorVelocity from '@/components/sectors/SectorVelocity'
+import SectorVoid from '@/components/sectors/SectorVoid'
 
 export default function Home() {
   return (

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useAudio } from '@/contexts/AudioContext'
 
 // ============================================================================
@@ -28,12 +28,7 @@ interface TypewriterLineProps {
   showCursor?: boolean
 }
 
-function TypewriterLine({
-  text,
-  startDelay,
-  onComplete,
-  showCursor = false,
-}: TypewriterLineProps) {
+function TypewriterLine({ text, startDelay, onComplete, showCursor = false }: TypewriterLineProps) {
   const [displayText, setDisplayText] = useState('')
   const [isTyping, setIsTyping] = useState(false)
   const [isComplete, setIsComplete] = useState(false)
@@ -70,12 +65,8 @@ function TypewriterLine({
       <span className="text-green-500 mr-2">&gt;</span>
       <span className="text-green-400">{displayText}</span>
       {showCursor && isComplete && <BlinkingCursor />}
-      {isTyping && !isComplete && (
-        <span className="text-green-300 animate-pulse">_</span>
-      )}
-      {isComplete && !showCursor && (
-        <span className="text-green-600 ml-2">[OK]</span>
-      )}
+      {isTyping && !isComplete && <span className="text-green-300 animate-pulse">_</span>}
+      {isComplete && !showCursor && <span className="text-green-600 ml-2">[OK]</span>}
     </div>
   )
 }
@@ -96,11 +87,7 @@ function BlinkingCursor() {
   }, [])
 
   return (
-    <span
-      className={`text-green-400 ml-1 transition-opacity duration-100 ${
-        visible ? 'opacity-100' : 'opacity-0'
-      }`}
-    >
+    <span className={`text-green-400 ml-1 transition-opacity duration-100 ${visible ? 'opacity-100' : 'opacity-0'}`}>
       _
     </span>
   )
@@ -128,9 +115,7 @@ function ProgressBar({ progress, label }: ProgressBarProps) {
         <span className="text-green-400">{'='.repeat(filled)}</span>
         <span className="text-green-900">{'-'.repeat(empty)}</span>
         <span className="text-green-600">]</span>
-        <span className="text-green-500 tabular-nums w-12">
-          {progress.toFixed(0)}%
-        </span>
+        <span className="text-green-500 tabular-nums w-12">{progress.toFixed(0)}%</span>
       </div>
     </div>
   )
@@ -146,9 +131,7 @@ interface BootSequenceProps {
 
 export default function BootSequence({ children }: BootSequenceProps) {
   const { isLoaded, loadProgress, initialize, isInitialized } = useAudio()
-  const [bootPhase, setBootPhase] = useState<'booting' | 'ready' | 'complete'>(
-    'booting'
-  )
+  const [bootPhase, setBootPhase] = useState<'booting' | 'ready' | 'complete'>('booting')
   const [completedLines, setCompletedLines] = useState(0)
   const [isExiting, setIsExiting] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -237,8 +220,7 @@ export default function BootSequence({ children }: BootSequenceProps) {
         <div
           className="pointer-events-none absolute inset-0"
           style={{
-            background:
-              'radial-gradient(ellipse at center, transparent 0%, transparent 50%, rgba(0,0,0,0.5) 100%)',
+            background: 'radial-gradient(ellipse at center, transparent 0%, transparent 50%, rgba(0,0,0,0.5) 100%)',
           }}
         />
 
@@ -246,8 +228,7 @@ export default function BootSequence({ children }: BootSequenceProps) {
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.03]"
           style={{
-            background:
-              'radial-gradient(ellipse at center, rgba(0,255,0,0.1) 0%, transparent 70%)',
+            background: 'radial-gradient(ellipse at center, rgba(0,255,0,0.1) 0%, transparent 70%)',
           }}
         />
 
@@ -265,8 +246,7 @@ export default function BootSequence({ children }: BootSequenceProps) {
                   onComplete={
                     index === BOOT_MESSAGES.length - 1
                       ? handleLineComplete
-                      : () =>
-                          setCompletedLines((prev) => Math.max(prev, index + 1))
+                      : () => setCompletedLines((prev) => Math.max(prev, index + 1))
                   }
                 />
               ))}
@@ -277,23 +257,19 @@ export default function BootSequence({ children }: BootSequenceProps) {
               )}
 
               {/* Complete message */}
-              {completedLines >= BOOT_MESSAGES.length &&
-                isLoaded &&
-                bootPhase === 'booting' && (
-                  <div className="flex items-center font-mono text-sm md:text-base mt-2">
-                    <span className="text-green-500 mr-2">&gt;</span>
-                    <span className="text-green-400">COMPLETE.</span>
-                    <span className="text-green-600 ml-2">[OK]</span>
-                  </div>
-                )}
+              {completedLines >= BOOT_MESSAGES.length && isLoaded && bootPhase === 'booting' && (
+                <div className="flex items-center font-mono text-sm md:text-base mt-2">
+                  <span className="text-green-500 mr-2">&gt;</span>
+                  <span className="text-green-400">COMPLETE.</span>
+                  <span className="text-green-600 ml-2">[OK]</span>
+                </div>
+              )}
 
               {/* Ready message - INITIALIZE button */}
               {bootPhase === 'ready' && (
                 <div className="mt-8 pt-4 border-t border-green-900/30">
                   <div className="flex items-center justify-center font-mono text-base md:text-lg">
-                    <span className="text-green-400 animate-pulse tracking-wider">
-                      [ INITIALIZE ]
-                    </span>
+                    <span className="text-green-400 animate-pulse tracking-wider">[ INITIALIZE ]</span>
                     <BlinkingCursor />
                   </div>
                   <div className="text-center mt-3 text-[10px] text-green-700 tracking-widest">

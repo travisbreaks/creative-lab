@@ -40,40 +40,15 @@ export default function SectionWrapper({
     <section
       ref={sectionRef}
       id={id}
-      className={cn(
-        'relative min-h-screen w-full',
-        'flex items-center justify-center',
-        'overflow-hidden',
-        className
-      )}
+      className={cn('relative min-h-screen w-full', 'flex items-center justify-center', 'overflow-hidden', className)}
     >
       {/* Glass containment border */}
       <div className="absolute inset-6 md:inset-8 pointer-events-none">
         {/* Corner accents - with color option */}
-        <div
-          className={cn(
-            'absolute top-0 left-0 w-12 h-12 border-l border-t',
-            accentColors[accent]
-          )}
-        />
-        <div
-          className={cn(
-            'absolute top-0 right-0 w-12 h-12 border-r border-t',
-            accentColors[accent]
-          )}
-        />
-        <div
-          className={cn(
-            'absolute bottom-0 left-0 w-12 h-12 border-l border-b',
-            accentColors[accent]
-          )}
-        />
-        <div
-          className={cn(
-            'absolute bottom-0 right-0 w-12 h-12 border-r border-b',
-            accentColors[accent]
-          )}
-        />
+        <div className={cn('absolute top-0 left-0 w-12 h-12 border-l border-t', accentColors[accent])} />
+        <div className={cn('absolute top-0 right-0 w-12 h-12 border-r border-t', accentColors[accent])} />
+        <div className={cn('absolute bottom-0 left-0 w-12 h-12 border-l border-b', accentColors[accent])} />
+        <div className={cn('absolute bottom-0 right-0 w-12 h-12 border-r border-b', accentColors[accent])} />
 
         {/* Subtle full border */}
         <div className="absolute inset-0 border border-white/[0.04] rounded-sm" />

@@ -1,10 +1,10 @@
 'use client'
 
-import { useRef, useEffect, useState, Suspense } from 'react'
+import { Float } from '@react-three/drei'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { Float } from '@react-three/drei'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -45,12 +45,7 @@ function HiggsFieldArtifact() {
         {/* Core icosahedron */}
         <mesh ref={meshRef}>
           <icosahedronGeometry args={[1.5, 1]} />
-          <meshBasicMaterial
-            color="#fbbf24"
-            transparent
-            opacity={0.05}
-            side={THREE.DoubleSide}
-          />
+          <meshBasicMaterial color="#fbbf24" transparent opacity={0.05} side={THREE.DoubleSide} />
         </mesh>
 
         {/* Wireframe overlay */}
@@ -68,12 +63,7 @@ function HiggsFieldArtifact() {
         {/* Inner structure */}
         <mesh rotation={[Math.PI / 4, 0, Math.PI / 4]}>
           <icosahedronGeometry args={[0.8, 0]} />
-          <meshBasicMaterial
-            color="#fbbf24"
-            wireframe
-            transparent
-            opacity={0.5}
-          />
+          <meshBasicMaterial color="#fbbf24" wireframe transparent opacity={0.5} />
         </mesh>
 
         {/* Orbiting particles */}
@@ -145,11 +135,7 @@ export default function SectorAperture() {
           setContainment(Math.max(0, newContainment))
 
           // Trigger breach flash when containment hits critical (near 0)
-          if (
-            self.progress > 0.95 &&
-            !hasFlashedRef.current &&
-            flashRef.current
-          ) {
+          if (self.progress > 0.95 && !hasFlashedRef.current && flashRef.current) {
             hasFlashedRef.current = true
 
             // THE BREACH EVENT - violent whiteout flash
@@ -219,7 +205,7 @@ export default function SectorAperture() {
         clipPath: 'circle(150% at 50% 50%)',
         duration: 1,
         ease: 'power3.inOut', // Smooth acceleration and deceleration
-      }
+      },
     )
 
     // Text fades and floats up
@@ -232,7 +218,7 @@ export default function SectorAperture() {
         duration: 0.5,
         ease: 'power2.inOut',
       },
-      0
+      0,
     )
 
     // Rings pulse and expand
@@ -245,7 +231,7 @@ export default function SectorAperture() {
           duration: 0.6,
           ease: 'power2.in',
         },
-        0.2
+        0.2,
       )
     }
 
@@ -265,10 +251,7 @@ export default function SectorAperture() {
   }
 
   return (
-    <section
-      ref={containerRef}
-      className="relative h-screen w-full overflow-hidden bg-[#050505]"
-    >
+    <section ref={containerRef} className="relative h-screen w-full overflow-hidden bg-[#050505]">
       {/* R3F Canvas - Behind everything */}
       <div className="absolute inset-0 z-0">
         <Canvas
@@ -286,22 +269,14 @@ export default function SectorAperture() {
         {/* Depth indicator overlay */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="text-center mt-48">
-            <div className="text-[10px] tracking-[0.5em] text-amber-500/40 uppercase mb-4">
-              Higgs Field Active
-            </div>
-            <div className="font-mono text-6xl md:text-8xl text-white/5 tracking-tighter">
-              -100m
-            </div>
+            <div className="text-[10px] tracking-[0.5em] text-amber-500/40 uppercase mb-4">Higgs Field Active</div>
+            <div className="font-mono text-6xl md:text-8xl text-white/5 tracking-tighter">-100m</div>
           </div>
         </div>
       </div>
 
       {/* The Mask Layer */}
-      <div
-        ref={maskRef}
-        className="absolute inset-0 z-10 bg-[#050505]"
-        style={{ clipPath: 'circle(0% at 50% 50%)' }}
-      />
+      <div ref={maskRef} className="absolute inset-0 z-10 bg-[#050505]" style={{ clipPath: 'circle(0% at 50% 50%)' }} />
 
       {/* Surface Layer - Iris texture */}
       <div className="absolute inset-0 z-20 pointer-events-none">
@@ -321,10 +296,7 @@ export default function SectorAperture() {
         />
 
         {/* Concentric rings - animated */}
-        <div
-          ref={ringsRef}
-          className="absolute inset-0 flex items-center justify-center"
-        >
+        <div ref={ringsRef} className="absolute inset-0 flex items-center justify-center">
           {[1, 2, 3, 4, 5, 6].map((ring) => (
             <div
               key={ring}
@@ -341,10 +313,7 @@ export default function SectorAperture() {
       </div>
 
       {/* Center Text */}
-      <div
-        ref={textRef}
-        className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none"
-      >
+      <div ref={textRef} className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
         <div className="text-center">
           <div className="text-[10px] tracking-[0.5em] text-amber-500/60 uppercase mb-8 animate-pulse">
             ⚠ Breach Protocol Initiated
@@ -356,14 +325,10 @@ export default function SectorAperture() {
             <span className="text-amber-500/90">FIELD</span>
           </h2>
 
-          <div className="text-lg md:text-xl tracking-[0.3em] text-neutral-500 uppercase">
-            Sector 1 // Depth -100m
-          </div>
+          <div className="text-lg md:text-xl tracking-[0.3em] text-neutral-500 uppercase">Sector 1 // Depth -100m</div>
 
           <div className="mt-16 flex flex-col items-center gap-3">
-            <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase">
-              Scroll to Breach
-            </div>
+            <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase">Scroll to Breach</div>
             <div className="relative">
               <div className="w-px h-10 bg-gradient-to-b from-amber-500/60 to-transparent" />
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-amber-500/60 animate-ping" />
@@ -374,49 +339,28 @@ export default function SectorAperture() {
 
       {/* Corner HUD */}
       <div className="absolute top-8 left-8 z-40">
-        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">
-          Sector 1
-        </div>
-        <div className="text-[11px] tracking-[0.3em] text-amber-500/70 uppercase">
-          The Containment Iris
-        </div>
+        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">Sector 1</div>
+        <div className="text-[11px] tracking-[0.3em] text-amber-500/70 uppercase">The Containment Iris</div>
       </div>
 
       <div className="absolute top-8 right-8 z-40 text-right">
-        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">
-          Field Status
-        </div>
+        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">Field Status</div>
         <div
           className={`font-mono text-lg transition-colors duration-300 ${containment > 50 ? 'text-amber-500/80' : containment > 20 ? 'text-orange-500' : 'text-red-500 animate-pulse'}`}
         >
-          {containment > 50
-            ? 'STABLE'
-            : containment > 20
-              ? 'UNSTABLE'
-              : 'CRITICAL'}
+          {containment > 50 ? 'STABLE' : containment > 20 ? 'UNSTABLE' : 'CRITICAL'}
         </div>
       </div>
 
       <div className="absolute bottom-8 left-8 z-40">
-        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">
-          Depth
-        </div>
-        <div className="font-mono text-2xl text-[#e5e5e5]/80 tabular-nums">
-          -100m
-        </div>
+        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">Depth</div>
+        <div className="font-mono text-2xl text-[#e5e5e5]/80 tabular-nums">-100m</div>
       </div>
 
       {/* Containment percentage - THE STAR */}
-      <div
-        ref={containmentRef}
-        className="absolute bottom-8 right-8 z-40 text-right"
-      >
-        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">
-          Containment
-        </div>
-        <div
-          className={`font-mono text-3xl tabular-nums transition-colors duration-200 ${getContainmentColor()}`}
-        >
+      <div ref={containmentRef} className="absolute bottom-8 right-8 z-40 text-right">
+        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">Containment</div>
+        <div className={`font-mono text-3xl tabular-nums transition-colors duration-200 ${getContainmentColor()}`}>
           {containment.toFixed(1)}%
         </div>
       </div>

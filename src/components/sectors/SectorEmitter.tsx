@@ -1,10 +1,10 @@
 'use client'
 
-import { useRef, useMemo } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { useMemo, useRef } from 'react'
+import * as THREE from 'three'
 import { useScrollVelocity } from '@/contexts/ScrollVelocityContext'
 import { useMobile } from '@/hooks/useMobile'
-import * as THREE from 'three'
 
 // ============================================================================
 // PARTICLE SPHERE - Instanced Mesh
@@ -57,12 +57,8 @@ function ParticleSphere({ particleCount }: ParticleSphereProps) {
 
       // Base rotation
       const rotationAngle = time * 0.1 * particleSpeed
-      const rotatedX =
-        originalPosition.x * Math.cos(rotationAngle) -
-        originalPosition.z * Math.sin(rotationAngle)
-      const rotatedZ =
-        originalPosition.x * Math.sin(rotationAngle) +
-        originalPosition.z * Math.cos(rotationAngle)
+      const rotatedX = originalPosition.x * Math.cos(rotationAngle) - originalPosition.z * Math.sin(rotationAngle)
+      const rotatedZ = originalPosition.x * Math.sin(rotationAngle) + originalPosition.z * Math.cos(rotationAngle)
 
       // Explosion effect based on scroll velocity
       const explosionScale = 1 + explosionFactor * 2
@@ -73,7 +69,7 @@ function ParticleSphere({ particleCount }: ParticleSphereProps) {
       dummy.position.set(
         rotatedX * explosionScale + noiseX,
         originalPosition.y * explosionScale + noiseY,
-        rotatedZ * explosionScale + noiseZ
+        rotatedZ * explosionScale + noiseZ,
       )
 
       // Particles get smaller as they explode
@@ -94,12 +90,7 @@ function ParticleSphere({ particleCount }: ParticleSphereProps) {
   return (
     <instancedMesh ref={meshRef} args={[undefined, undefined, particleCount]}>
       <sphereGeometry args={[0.015, 8, 8]} />
-      <meshBasicMaterial
-        color="#f59e0b"
-        transparent
-        opacity={0.6}
-        depthWrite={false}
-      />
+      <meshBasicMaterial color="#f59e0b" transparent opacity={0.6} depthWrite={false} />
     </instancedMesh>
   )
 }
@@ -132,12 +123,7 @@ function GlowRing() {
   return (
     <mesh ref={ringRef}>
       <ringGeometry args={[2.8, 3, 64]} />
-      <meshBasicMaterial
-        color="#22d3ee"
-        transparent
-        opacity={0.15}
-        side={THREE.DoubleSide}
-      />
+      <meshBasicMaterial color="#22d3ee" transparent opacity={0.15} side={THREE.DoubleSide} />
     </mesh>
   )
 }
@@ -180,9 +166,7 @@ interface SceneProps {
 }
 
 function Scene({ isMobile }: SceneProps) {
-  const particleCount = isMobile
-    ? PARTICLE_COUNT_MOBILE
-    : PARTICLE_COUNT_DESKTOP
+  const particleCount = isMobile ? PARTICLE_COUNT_MOBILE : PARTICLE_COUNT_DESKTOP
 
   return (
     <>
@@ -207,10 +191,7 @@ export default function SectorEmitter() {
   const textOpacity = Math.max(0, 1 - normalizedSpeed * 2)
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative h-screen bg-[#030303] overflow-hidden"
-    >
+    <section ref={sectionRef} className="relative h-screen bg-[#030303] overflow-hidden">
       {/* R3F Canvas - Particle Sphere */}
       <div className="absolute inset-0 z-0">
         <Canvas
@@ -232,19 +213,13 @@ export default function SectorEmitter() {
 
       {/* Sector Header */}
       <div className="absolute top-8 left-8 z-20">
-        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">
-          Sector 0
-        </div>
-        <div className="text-[11px] tracking-[0.3em] text-amber-500/70 uppercase">
-          The Emitter
-        </div>
+        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">Sector 0</div>
+        <div className="text-[11px] tracking-[0.3em] text-amber-500/70 uppercase">The Emitter</div>
       </div>
 
       {/* Status Readout */}
       <div className="absolute top-8 right-8 z-20 text-right">
-        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">
-          Surface Level
-        </div>
+        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">Surface Level</div>
         <div className="font-mono text-sm text-amber-400/70">DEPTH: 0m</div>
       </div>
 
@@ -277,16 +252,11 @@ export default function SectorEmitter() {
         className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center"
         style={{ opacity: textOpacity }}
       >
-        <span className="text-[10px] text-white/30 tracking-[0.3em] uppercase mb-4">
-          Scroll to descend
-        </span>
+        <span className="text-[10px] text-white/30 tracking-[0.3em] uppercase mb-4">Scroll to descend</span>
 
         {/* Animated arrow */}
         <div className="relative w-6 h-10 border border-white/20 rounded-full flex items-start justify-center pt-2">
-          <div
-            className="w-1 h-2 bg-amber-400/60 rounded-full animate-bounce"
-            style={{ animationDuration: '1.5s' }}
-          />
+          <div className="w-1 h-2 bg-amber-400/60 rounded-full animate-bounce" style={{ animationDuration: '1.5s' }} />
         </div>
       </div>
 
@@ -294,11 +264,7 @@ export default function SectorEmitter() {
       <div className="absolute left-8 top-1/2 -translate-y-1/2 z-10">
         <div className="flex flex-col gap-2">
           {[...Array(5)].map((_, i) => (
-            <div
-              key={i}
-              className="w-4 h-px bg-white/10"
-              style={{ opacity: 1 - i * 0.15 }}
-            />
+            <div key={i} className="w-4 h-px bg-white/10" style={{ opacity: 1 - i * 0.15 }} />
           ))}
         </div>
       </div>
@@ -306,11 +272,7 @@ export default function SectorEmitter() {
       <div className="absolute right-8 top-1/2 -translate-y-1/2 z-10">
         <div className="flex flex-col gap-2">
           {[...Array(5)].map((_, i) => (
-            <div
-              key={i}
-              className="w-4 h-px bg-white/10"
-              style={{ opacity: 1 - i * 0.15 }}
-            />
+            <div key={i} className="w-4 h-px bg-white/10" style={{ opacity: 1 - i * 0.15 }} />
           ))}
         </div>
       </div>

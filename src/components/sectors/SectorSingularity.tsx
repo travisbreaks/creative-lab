@@ -1,13 +1,12 @@
 'use client'
 
-import { useRef, useMemo, Suspense } from 'react'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { useTexture, shaderMaterial } from '@react-three/drei'
+import { shaderMaterial, useTexture } from '@react-three/drei'
+import { Canvas, extend, useFrame, useThree } from '@react-three/fiber'
+import { Suspense, useMemo, useRef } from 'react'
+import * as THREE from 'three'
+import { ASSETS } from '@/config/assets'
 import { useScrollVelocity } from '@/contexts/ScrollVelocityContext'
 import { useMobile } from '@/hooks/useMobile'
-import { ASSETS } from '@/config/assets'
-import * as THREE from 'three'
-import { extend } from '@react-three/fiber'
 
 // ============================================================================
 // LIQUID DISTORTION SHADER
@@ -76,7 +75,7 @@ const LiquidMaterial = shaderMaterial(
 
       gl_FragColor = color;
     }
-  `
+  `,
 )
 
 extend({ LiquidMaterial })
@@ -100,13 +99,7 @@ interface LiquidImageProps {
   isMobile: boolean
 }
 
-function LiquidImage({
-  position,
-  scale,
-  textureUrl,
-  index,
-  isMobile,
-}: LiquidImageProps) {
+function LiquidImage({ position, scale, textureUrl, index, isMobile }: LiquidImageProps) {
   const meshRef = useRef<THREE.Mesh>(null)
   const materialRef = useRef<any>(null)
   const { normalizedSpeed, isScrolling } = useScrollVelocity()
@@ -130,36 +123,18 @@ function LiquidImage({
     // Distortion based on velocity - idle has gentle ripple
     // Reduce distortion intensity on mobile
     const distortionMultiplier = isMobile ? 1.5 : 3
-    const targetDistortion = isScrolling
-      ? normalizedSpeed * distortionMultiplier
-      : 0.2
-    materialRef.current.uDistortion = THREE.MathUtils.lerp(
-      materialRef.current.uDistortion,
-      targetDistortion,
-      0.1
-    )
+    const targetDistortion = isScrolling ? normalizedSpeed * distortionMultiplier : 0.2
+    materialRef.current.uDistortion = THREE.MathUtils.lerp(materialRef.current.uDistortion, targetDistortion, 0.1)
 
     // RGB shift at high speeds (disabled on mobile for performance)
-    const targetRgbShift =
-      !isMobile && normalizedSpeed > 0.5 ? normalizedSpeed * 2 : 0
-    materialRef.current.uRgbShift = THREE.MathUtils.lerp(
-      materialRef.current.uRgbShift,
-      targetRgbShift,
-      0.1
-    )
+    const targetRgbShift = !isMobile && normalizedSpeed > 0.5 ? normalizedSpeed * 2 : 0
+    materialRef.current.uRgbShift = THREE.MathUtils.lerp(materialRef.current.uRgbShift, targetRgbShift, 0.1)
   })
 
   return (
     <mesh ref={meshRef} position={position} scale={scale}>
       <planeGeometry args={[1, 1, segments, segments]} />
-      <liquidMaterial
-        ref={materialRef}
-        uTexture={texture}
-        uTime={0}
-        uDistortion={0.2}
-        uRgbShift={0}
-        transparent
-      />
+      <liquidMaterial ref={materialRef} uTexture={texture} uTime={0} uDistortion={0.2} uRgbShift={0} transparent />
     </mesh>
   )
 }
@@ -225,39 +200,23 @@ function GalleryScene({ isMobile }: GallerySceneProps) {
   const images = useMemo(
     () => [
       {
-        position: [-imageWidth / 2 - gap / 2, imageHeight / 2 + gap / 2, 0] as [
-          number,
-          number,
-          number,
-        ],
+        position: [-imageWidth / 2 - gap / 2, imageHeight / 2 + gap / 2, 0] as [number, number, number],
         url: ASSETS.failures[0] || generatePlaceholderDataUrl(0),
       },
       {
-        position: [imageWidth / 2 + gap / 2, imageHeight / 2 + gap / 2, 0] as [
-          number,
-          number,
-          number,
-        ],
+        position: [imageWidth / 2 + gap / 2, imageHeight / 2 + gap / 2, 0] as [number, number, number],
         url: ASSETS.failures[1] || generatePlaceholderDataUrl(1),
       },
       {
-        position: [
-          -imageWidth / 2 - gap / 2,
-          -imageHeight / 2 - gap / 2,
-          0,
-        ] as [number, number, number],
+        position: [-imageWidth / 2 - gap / 2, -imageHeight / 2 - gap / 2, 0] as [number, number, number],
         url: ASSETS.failures[2] || generatePlaceholderDataUrl(2),
       },
       {
-        position: [imageWidth / 2 + gap / 2, -imageHeight / 2 - gap / 2, 0] as [
-          number,
-          number,
-          number,
-        ],
+        position: [imageWidth / 2 + gap / 2, -imageHeight / 2 - gap / 2, 0] as [number, number, number],
         url: ASSETS.failures[3] || generatePlaceholderDataUrl(3),
       },
     ],
-    [imageWidth, imageHeight, gap]
+    [imageWidth, imageHeight, gap],
   )
 
   return (
@@ -294,30 +253,20 @@ export default function SectorSingularity() {
     <section className="relative min-h-screen bg-black overflow-hidden">
       {/* Sector Header */}
       <div className="absolute top-8 left-8 z-20">
-        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">
-          Sector 5
-        </div>
-        <div className="text-[11px] tracking-[0.3em] text-purple-500/70 uppercase">
-          The Singularity
-        </div>
+        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">Sector 5</div>
+        <div className="text-[11px] tracking-[0.3em] text-purple-500/70 uppercase">The Singularity</div>
       </div>
 
       {/* Depth indicator */}
       <div className="absolute top-8 right-8 z-20 text-right">
-        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">
-          Maximum Depth
-        </div>
+        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">Maximum Depth</div>
         <div className="font-mono text-sm text-purple-400/70">-1000m</div>
       </div>
 
       {/* Section Title */}
       <div className="pt-24 pb-8 text-center z-10 relative">
-        <div className="text-[10px] tracking-[0.5em] text-purple-500/40 uppercase mb-4">
-          Failed Experiments Archive
-        </div>
-        <h2 className="font-mono text-4xl md:text-5xl text-white/90 tracking-tight mb-4">
-          THE SINGULARITY
-        </h2>
+        <div className="text-[10px] tracking-[0.5em] text-purple-500/40 uppercase mb-4">Failed Experiments Archive</div>
+        <h2 className="font-mono text-4xl md:text-5xl text-white/90 tracking-tight mb-4">THE SINGULARITY</h2>
         <p className="text-sm text-neutral-500 max-w-md mx-auto">
           Where all paths converge. Scroll to disturb the field.
         </p>
@@ -376,9 +325,7 @@ export default function SectorSingularity() {
           <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-purple-500/5 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity" />
         </button>
 
-        <div className="mt-12 font-mono text-xs text-neutral-700">
-          DEPTH: -1000m // STATUS: OFFLINE // SIGNAL: LOST
-        </div>
+        <div className="mt-12 font-mono text-xs text-neutral-700">DEPTH: -1000m // STATUS: OFFLINE // SIGNAL: LOST</div>
       </div>
 
       {/* Corner Brackets - purple tinted */}
