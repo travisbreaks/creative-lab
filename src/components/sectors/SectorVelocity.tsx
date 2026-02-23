@@ -1,7 +1,7 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
+import { useEffect, useRef } from 'react'
 import { useScrollVelocity } from '@/contexts/ScrollVelocityContext'
 
 // ============================================================================
@@ -108,34 +108,19 @@ export default function SectorVelocity() {
   }, [])
 
   return (
-    <section
-      ref={containerRef}
-      className="relative min-h-screen bg-[#050505] py-24 overflow-hidden"
-    >
+    <section ref={containerRef} className="relative min-h-screen bg-[#050505] py-24 overflow-hidden">
       {/* Sector Header */}
       <div className="absolute top-8 left-8 z-10">
-        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">
-          Sector 0
-        </div>
-        <div className="text-[11px] tracking-[0.3em] text-neutral-500 uppercase">
-          The Event Horizon
-        </div>
+        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">Sector 0</div>
+        <div className="text-[11px] tracking-[0.3em] text-neutral-500 uppercase">The Event Horizon</div>
       </div>
 
       {/* Velocity Indicator */}
       <div className="absolute top-8 right-8 z-10 text-right">
-        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">
-          Velocity
-        </div>
-        <div className="font-mono text-2xl text-[#e5e5e5] tabular-nums">
-          {(normalizedSpeed * 100).toFixed(1)}%
-        </div>
+        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">Velocity</div>
+        <div className="font-mono text-2xl text-[#e5e5e5] tabular-nums">{(normalizedSpeed * 100).toFixed(1)}%</div>
         <div className="text-[10px] tracking-[0.2em] text-neutral-600 mt-1">
-          {direction > 0
-            ? '▼ DESCENDING'
-            : direction < 0
-              ? '▲ ASCENDING'
-              : '■ STATIC'}
+          {direction > 0 ? '▼ DESCENDING' : direction < 0 ? '▲ ASCENDING' : '■ STATIC'}
         </div>
       </div>
 
@@ -146,15 +131,9 @@ export default function SectorVelocity() {
       <div className="relative max-w-4xl mx-auto px-8 pt-32">
         {/* Column Headers */}
         <div className="grid grid-cols-[1fr_100px_100px] gap-4 mb-8 pb-4 border-b border-neutral-800">
-          <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase">
-            Experiment ID
-          </div>
-          <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase text-right">
-            Yield
-          </div>
-          <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase text-right">
-            Status
-          </div>
+          <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase">Experiment ID</div>
+          <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase text-right">Yield</div>
+          <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase text-right">Status</div>
         </div>
 
         {/* Log Entries */}
@@ -171,9 +150,7 @@ export default function SectorVelocity() {
               }}
             >
               {/* Experiment ID */}
-              <div className="font-mono text-xl md:text-2xl lg:text-3xl text-[#e5e5e5] tracking-tight">
-                {log.id}
-              </div>
+              <div className="font-mono text-xl md:text-2xl lg:text-3xl text-[#e5e5e5] tracking-tight">{log.id}</div>
 
               {/* Yield */}
               <div className="font-mono text-lg md:text-xl text-neutral-400 text-right tabular-nums self-center">
@@ -195,30 +172,20 @@ export default function SectorVelocity() {
         {/* Footer Stats */}
         <div className="mt-16 pt-8 border-t border-neutral-800 grid grid-cols-3 gap-8">
           <div>
-            <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-2">
-              Total Experiments
-            </div>
-            <div className="font-mono text-3xl text-[#e5e5e5]">
-              {EXPERIMENT_LOGS.length}
-            </div>
+            <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-2">Total Experiments</div>
+            <div className="font-mono text-3xl text-[#e5e5e5]">{EXPERIMENT_LOGS.length}</div>
           </div>
           <div>
-            <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-2">
-              Nominal Rate
-            </div>
+            <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-2">Nominal Rate</div>
             <div className="font-mono text-3xl text-emerald-400">
-              {(
-                (EXPERIMENT_LOGS.filter((l) => l.status === 'NOMINAL').length /
-                  EXPERIMENT_LOGS.length) *
-                100
-              ).toFixed(1)}
+              {((EXPERIMENT_LOGS.filter((l) => l.status === 'NOMINAL').length / EXPERIMENT_LOGS.length) * 100).toFixed(
+                1,
+              )}
               %
             </div>
           </div>
           <div>
-            <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-2">
-              Anomalies
-            </div>
+            <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-2">Anomalies</div>
             <div className="font-mono text-3xl text-amber-400">
               {EXPERIMENT_LOGS.filter((l) => l.status === 'ANOMALY').length}
             </div>

@@ -1,12 +1,12 @@
 'use client'
 
-import { useRef, useEffect, useState, useCallback } from 'react'
-import Image from 'next/image'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Image from 'next/image'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { ASSETS } from '@/config/assets'
 import { useScrollVelocity } from '@/contexts/ScrollVelocityContext'
 import { useMobile } from '@/hooks/useMobile'
-import { ASSETS } from '@/config/assets'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -83,10 +83,7 @@ const ISOTOPES = [
   },
 ]
 
-const COLOR_MAP: Record<
-  string,
-  { bg: string; border: string; text: string; glow: string; rgbGlow: string }
-> = {
+const COLOR_MAP: Record<string, { bg: string; border: string; text: string; glow: string; rgbGlow: string }> = {
   amber: {
     bg: 'bg-amber-500/5',
     border: 'border-amber-500/10',
@@ -165,9 +162,7 @@ function useTextScramble(text: string, isScrambling: boolean) {
         .split('')
         .map((char) => {
           if (char === ' ') return ' '
-          return Math.random() > 0.5
-            ? GLITCH_CHARS[Math.floor(Math.random() * GLITCH_CHARS.length)]
-            : char
+          return Math.random() > 0.5 ? GLITCH_CHARS[Math.floor(Math.random() * GLITCH_CHARS.length)] : char
         })
         .join('')
       setDisplayText(scrambled)
@@ -247,13 +242,7 @@ function IsotopeCard({
       >
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
-          <Image
-            src={isotope.image}
-            alt={isotope.name}
-            fill
-            className="object-cover"
-            sizes="320px"
-          />
+          <Image src={isotope.image} alt={isotope.name} fill className="object-cover" sizes="320px" />
           {/* Dark overlay for text readability */}
           <div className="absolute inset-0 bg-black/60" />
         </div>
@@ -278,9 +267,7 @@ function IsotopeCard({
           <div className="flex items-start justify-between mb-6">
             <div>
               <div
-                className={`font-mono text-6xl ${colors.text} mb-1 transition-all ${
-                  isScrambling ? 'blur-[1px]' : ''
-                }`}
+                className={`font-mono text-6xl ${colors.text} mb-1 transition-all ${isScrambling ? 'blur-[1px]' : ''}`}
                 style={{ transform: 'translateZ(20px)' }}
               >
                 {scrambledSymbol}
@@ -294,14 +281,8 @@ function IsotopeCard({
               </div>
             </div>
             <div className="text-right">
-              <div className="text-[10px] tracking-[0.3em] text-neutral-600 uppercase">
-                Mass
-              </div>
-              <div
-                className={`font-mono text-xl text-neutral-300 ${
-                  isScrambling ? 'blur-[0.5px]' : ''
-                }`}
-              >
+              <div className="text-[10px] tracking-[0.3em] text-neutral-600 uppercase">Mass</div>
+              <div className={`font-mono text-xl text-neutral-300 ${isScrambling ? 'blur-[0.5px]' : ''}`}>
                 {scrambledMass}
               </div>
             </div>
@@ -310,12 +291,8 @@ function IsotopeCard({
           {/* Energy Bar */}
           <div className="mb-6">
             <div className="flex justify-between items-center mb-2">
-              <div className="text-[10px] tracking-[0.3em] text-neutral-600 uppercase">
-                Energy Level
-              </div>
-              <div className={`font-mono text-xs ${colors.text}`}>
-                {isotope.energy}%
-              </div>
+              <div className="text-[10px] tracking-[0.3em] text-neutral-600 uppercase">Energy Level</div>
+              <div className={`font-mono text-xs ${colors.text}`}>{isotope.energy}%</div>
             </div>
             <div className="h-1.5 bg-neutral-900/50 rounded-full overflow-hidden backdrop-blur-sm">
               <div
@@ -331,24 +308,14 @@ function IsotopeCard({
 
           {/* Half-life */}
           <div className="mb-6">
-            <div className="text-[10px] tracking-[0.3em] text-neutral-600 uppercase mb-1">
-              Half-life
-            </div>
-            <div className="font-mono text-base text-neutral-400">
-              {isotope.halfLife}
-            </div>
+            <div className="text-[10px] tracking-[0.3em] text-neutral-600 uppercase mb-1">Half-life</div>
+            <div className="font-mono text-base text-neutral-400">{isotope.halfLife}</div>
           </div>
 
           {/* Description */}
           <div className="mt-auto">
-            <div className="text-[10px] tracking-[0.3em] text-neutral-600 uppercase mb-2">
-              Classification
-            </div>
-            <p
-              className={`text-sm text-neutral-400 leading-relaxed ${
-                isScrambling ? 'blur-[1px]' : ''
-              }`}
-            >
+            <div className="text-[10px] tracking-[0.3em] text-neutral-600 uppercase mb-2">Classification</div>
+            <p className={`text-sm text-neutral-400 leading-relaxed ${isScrambling ? 'blur-[1px]' : ''}`}>
               {isotope.description}
             </p>
           </div>
@@ -376,9 +343,7 @@ export default function SectorLattice() {
   const containerRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const cardsRef = useRef<(HTMLDivElement | null)[]>([])
-  const [tiltStyles, setTiltStyles] = useState<
-    Record<number, React.CSSProperties>
-  >({})
+  const [tiltStyles, setTiltStyles] = useState<Record<number, React.CSSProperties>>({})
   const { speed, isScrolling } = useScrollVelocity()
   const isMobile = useMobile()
 
@@ -444,7 +409,7 @@ export default function SectorLattice() {
           ease: 'power3.out',
           duration: 0.15,
         },
-        0
+        0,
       )
 
       // Phase 2 (15-100%): Horizontal conveyor belt movement
@@ -455,7 +420,7 @@ export default function SectorLattice() {
           ease: 'none',
           duration: 0.85,
         },
-        0.15
+        0.15,
       )
     }, sectionRef)
 
@@ -497,11 +462,7 @@ export default function SectorLattice() {
   }, [])
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative h-screen bg-[#030303] overflow-hidden"
-      style={{ userSelect: 'none' }}
-    >
+    <section ref={sectionRef} className="relative h-screen bg-[#030303] overflow-hidden" style={{ userSelect: 'none' }}>
       {/* Background noise texture */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
@@ -512,19 +473,13 @@ export default function SectorLattice() {
 
       {/* Sector Header */}
       <div className="absolute top-8 left-8 z-20">
-        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">
-          Sector 2
-        </div>
-        <div className="text-[11px] tracking-[0.3em] text-emerald-500/70 uppercase">
-          The Lattice
-        </div>
+        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">Sector 2</div>
+        <div className="text-[11px] tracking-[0.3em] text-emerald-500/70 uppercase">The Lattice</div>
       </div>
 
       {/* Velocity Warning System Readout */}
       <div className="absolute top-8 right-8 z-20 text-right">
-        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">
-          System Status
-        </div>
+        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">System Status</div>
         <div
           className={`
             font-mono text-sm tracking-wider px-3 py-1 rounded
@@ -539,9 +494,7 @@ export default function SectorLattice() {
           {isHighVelocity ? '⚠ VELOCITY WARNING' : '◉ NOMINAL'}
         </div>
         {isHighVelocity && (
-          <div className="text-[10px] text-red-400/70 mt-1 font-mono">
-            SPEED: {speed.toFixed(1)} &gt; THRESHOLD
-          </div>
+          <div className="text-[10px] text-red-400/70 mt-1 font-mono">SPEED: {speed.toFixed(1)} &gt; THRESHOLD</div>
         )}
       </div>
 
@@ -550,9 +503,7 @@ export default function SectorLattice() {
         <div className="text-[10px] tracking-[0.5em] text-emerald-500/50 uppercase mb-2">
           Isotope Conveyor // Sample Array
         </div>
-        <h2 className="font-mono text-3xl md:text-4xl text-[#e5e5e5] tracking-tight">
-          CONTAINED SPECIMENS
-        </h2>
+        <h2 className="font-mono text-3xl md:text-4xl text-[#e5e5e5] tracking-tight">CONTAINED SPECIMENS</h2>
       </div>
 
       {/* Horizontal Scroll Container */}
@@ -562,11 +513,7 @@ export default function SectorLattice() {
         style={{ paddingLeft: '100px' }}
       >
         {/* Card Track - moves horizontally */}
-        <div
-          ref={trackRef}
-          className="flex gap-12 items-center"
-          style={{ willChange: 'transform' }}
-        >
+        <div ref={trackRef} className="flex gap-12 items-center" style={{ willChange: 'transform' }}>
           {ISOTOPES.map((isotope, index) => (
             <IsotopeCard
               key={isotope.id}
@@ -587,19 +534,13 @@ export default function SectorLattice() {
 
       {/* Depth indicator */}
       <div className="absolute bottom-8 left-8 z-20">
-        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">
-          Depth
-        </div>
-        <div className="font-mono text-2xl text-[#e5e5e5]/80 tabular-nums">
-          -200m
-        </div>
+        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">Depth</div>
+        <div className="font-mono text-2xl text-[#e5e5e5]/80 tabular-nums">-200m</div>
       </div>
 
       {/* Specimen count */}
       <div className="absolute bottom-8 right-8 z-20 text-right">
-        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">
-          Active Specimens
-        </div>
+        <div className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase mb-1">Active Specimens</div>
         <div className="font-mono text-2xl text-emerald-500 tabular-nums">
           {ISOTOPES.length} / {ISOTOPES.length}
         </div>

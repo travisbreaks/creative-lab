@@ -14,12 +14,7 @@ export const ASSETS = {
   ],
 
   // Sector 5: The Singularity - Failed experiment textures
-  failures: [
-    '/assets/failure-1.jpg',
-    '/assets/failure-2.jpg',
-    '/assets/failure-3.jpg',
-    '/assets/failure-4.jpg',
-  ],
+  failures: ['/assets/failure-1.jpg', '/assets/failure-2.jpg', '/assets/failure-3.jpg', '/assets/failure-4.jpg'],
 } as const
 
 // Type exports for strict typing

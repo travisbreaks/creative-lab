@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect, useCallback } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { useScrollVelocity } from '@/contexts/ScrollVelocityContext'
 
 // ============================================================================
@@ -19,10 +19,8 @@ export default function Oscilloscope() {
 
   // Get status text and color
   const getStatus = () => {
-    if (normalizedSpeed > 0.7)
-      return { text: 'CRITICAL', color: 'text-red-400' }
-    if (normalizedSpeed > 0.4)
-      return { text: 'ELEVATED', color: 'text-amber-400' }
+    if (normalizedSpeed > 0.7) return { text: 'CRITICAL', color: 'text-red-400' }
+    if (normalizedSpeed > 0.4) return { text: 'ELEVATED', color: 'text-amber-400' }
     if (isScrolling) return { text: 'ACTIVE', color: 'text-cyan-400' }
     return { text: 'STABLE', color: 'text-emerald-400' }
   }
@@ -104,9 +102,7 @@ export default function Oscilloscope() {
       }
 
       // Add secondary harmonic for complexity
-      y +=
-        Math.sin(x * frequency * 2.5 + phaseRef.current * 1.5) *
-        (amplitude * 0.3)
+      y += Math.sin(x * frequency * 2.5 + phaseRef.current * 1.5) * (amplitude * 0.3)
 
       if (x === 0) {
         ctx.moveTo(x, centerY + y)
@@ -129,8 +125,7 @@ export default function Oscilloscope() {
       ctx.fillStyle = 'rgba(248, 113, 113, 0.8)'
       for (let i = 0; i < blipCount; i++) {
         const blipX = (phaseRef.current * 50 + i * 40) % width
-        const blipY =
-          centerY + Math.sin(blipX * frequency + phaseRef.current) * amplitude
+        const blipY = centerY + Math.sin(blipX * frequency + phaseRef.current) * amplitude
         ctx.beginPath()
         ctx.arc(blipX, blipY, 3, 0, Math.PI * 2)
         ctx.fill()
@@ -163,14 +158,8 @@ export default function Oscilloscope() {
 
         {/* Header */}
         <div className="flex items-center justify-between px-3 py-1.5 border-b border-cyan-500/10 bg-black/40">
-          <div className="text-[9px] tracking-[0.3em] text-neutral-500 uppercase">
-            Bioscan
-          </div>
-          <div
-            className={`text-[9px] tracking-wider font-mono ${status.color}`}
-          >
-            {status.text}
-          </div>
+          <div className="text-[9px] tracking-[0.3em] text-neutral-500 uppercase">Bioscan</div>
+          <div className={`text-[9px] tracking-wider font-mono ${status.color}`}>{status.text}</div>
         </div>
 
         {/* Canvas */}
@@ -189,40 +178,28 @@ export default function Oscilloscope() {
           <div className="flex items-center gap-3">
             <div>
               <div className="text-[8px] text-neutral-600 uppercase">Vel</div>
-              <div
-                className={`text-[10px] font-mono tabular-nums ${status.color}`}
-              >
-                {speed.toFixed(1)}
-              </div>
+              <div className={`text-[10px] font-mono tabular-nums ${status.color}`}>{speed.toFixed(1)}</div>
             </div>
             <div>
               <div className="text-[8px] text-neutral-600 uppercase">Depth</div>
-              <div className="text-[10px] font-mono tabular-nums text-cyan-400">
-                {depth}m
-              </div>
+              <div className="text-[10px] font-mono tabular-nums text-cyan-400">{depth}m</div>
             </div>
           </div>
 
           {/* Heartbeat indicator */}
           <div className="flex items-center gap-1">
             <div
-              className={`w-1.5 h-1.5 rounded-full ${
-                isScrolling ? 'bg-cyan-400 animate-pulse' : 'bg-neutral-600'
-              }`}
+              className={`w-1.5 h-1.5 rounded-full ${isScrolling ? 'bg-cyan-400 animate-pulse' : 'bg-neutral-600'}`}
             />
             <div
               className={`w-1.5 h-1.5 rounded-full ${
-                normalizedSpeed > 0.3
-                  ? 'bg-amber-400 animate-pulse'
-                  : 'bg-neutral-700'
+                normalizedSpeed > 0.3 ? 'bg-amber-400 animate-pulse' : 'bg-neutral-700'
               }`}
               style={{ animationDelay: '0.1s' }}
             />
             <div
               className={`w-1.5 h-1.5 rounded-full ${
-                normalizedSpeed > 0.6
-                  ? 'bg-red-400 animate-pulse'
-                  : 'bg-neutral-800'
+                normalizedSpeed > 0.6 ? 'bg-red-400 animate-pulse' : 'bg-neutral-800'
               }`}
               style={{ animationDelay: '0.2s' }}
             />

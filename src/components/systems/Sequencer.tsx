@@ -1,19 +1,19 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
 import { Howl } from 'howler'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import {
-  SCORE,
-  BPM,
   BAR_MS,
-  CROSSFADE_MS,
-  getZone,
-  getZoneIndex,
-  getStartZone,
+  BPM,
   barsToMs,
+  CROSSFADE_MS,
+  canFastDescend,
   getBarsToNextGrid,
   getMsToNextGrid,
-  canFastDescend,
+  getStartZone,
+  getZone,
+  getZoneIndex,
+  SCORE,
   type ZoneConfig,
 } from '@/config/audio'
 
@@ -21,13 +21,7 @@ import {
 // TYPES
 // ============================================================================
 
-export type SequencerState =
-  | 'idle'
-  | 'loading'
-  | 'ready'
-  | 'playing'
-  | 'transitioning'
-  | 'paused'
+export type SequencerState = 'idle' | 'loading' | 'ready' | 'playing' | 'transitioning' | 'paused'
 
 export interface SequencerStatus {
   state: SequencerState
@@ -46,11 +40,7 @@ export interface SequencerCallbacks {
   onStateChange?: (state: SequencerState) => void
   onZoneChange?: (zoneId: string) => void
   onBeat?: (beat: number, bar: number) => void
-  onTransitionStart?: (
-    fromZone: string,
-    toZone: string,
-    bridgeBars: number
-  ) => void
+  onTransitionStart?: (fromZone: string, toZone: string, bridgeBars: number) => void
   onTransitionComplete?: (toZone: string) => void
   onLoadProgress?: (progress: number) => void
 }
@@ -120,17 +110,13 @@ export class Sequencer {
         html5: true,
         onload: () => {
           this.loadedCount++
-          this.callbacks.onLoadProgress?.(
-            (this.loadedCount / this.totalToLoad) * 100
-          )
+          this.callbacks.onLoadProgress?.((this.loadedCount / this.totalToLoad) * 100)
           resolve()
         },
         onloaderror: (_id, error) => {
           console.warn(`Failed to load ${src}:`, error)
           this.loadedCount++
-          this.callbacks.onLoadProgress?.(
-            (this.loadedCount / this.totalToLoad) * 100
-          )
+          this.callbacks.onLoadProgress?.((this.loadedCount / this.totalToLoad) * 100)
           resolve()
         },
       })
@@ -301,11 +287,7 @@ export class Sequencer {
     const msToWait = getMsToNextGrid(currentMs)
 
     const bridgeBars = this.currentZone?.bridge?.bars || 0
-    this.callbacks.onTransitionStart?.(
-      this.currentZone!.id,
-      targetZoneId,
-      bridgeBars
-    )
+    this.callbacks.onTransitionStart?.(this.currentZone!.id, targetZoneId, bridgeBars)
 
     // If we're already on a grid point, execute immediately
     if (msToWait === 0 || msToWait < 100) {
@@ -497,11 +479,7 @@ export class Sequencer {
   cancelTransition(): void {
     this.clearPendingTransition()
     this.pendingTransition = null
-    if (
-      this.state === 'transitioning' &&
-      !this.isInBridge &&
-      !this.isCrossfading
-    ) {
+    if (this.state === 'transitioning' && !this.isInBridge && !this.isCrossfading) {
       this.setState('playing')
     }
   }
@@ -554,12 +532,7 @@ export class Sequencer {
     let barsUntilTransition: number | null = null
     let bridgeProgress = 0
 
-    if (
-      this.pendingTransition &&
-      this.currentSound &&
-      !this.isInBridge &&
-      !this.isCrossfading
-    ) {
+    if (this.pendingTransition && this.currentSound && !this.isInBridge && !this.isCrossfading) {
       const currentMs = (this.currentSound.seek() || 0) * 1000
       barsUntilTransition = getBarsToNextGrid(currentMs)
     }

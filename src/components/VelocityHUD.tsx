@@ -3,8 +3,7 @@
 import { useScrollVelocity } from '@/contexts/ScrollVelocityContext'
 
 export default function VelocityHUD() {
-  const { speed, normalizedSpeed, scroll, direction, isScrolling } =
-    useScrollVelocity()
+  const { speed, normalizedSpeed, scroll, direction, isScrolling } = useScrollVelocity()
 
   // Calculate depth based on scroll position (rough approximation)
   // Assuming ~4000px total scroll = -1000m depth
@@ -31,13 +30,9 @@ export default function VelocityHUD() {
       <div className="backdrop-blur-md bg-black/40 border border-white/10 rounded px-6 py-3 flex items-center gap-6">
         {/* Scroll Velocity */}
         <div className="flex flex-col items-center">
-          <div className="text-[9px] tracking-[0.3em] text-neutral-500 uppercase mb-1">
-            Scroll Velocity
-          </div>
+          <div className="text-[9px] tracking-[0.3em] text-neutral-500 uppercase mb-1">Scroll Velocity</div>
           <div className="flex items-center gap-2">
-            <div
-              className={`font-mono text-lg tabular-nums ${getSpeedColor()} transition-colors`}
-            >
+            <div className={`font-mono text-lg tabular-nums ${getSpeedColor()} transition-colors`}>
               {speed.toFixed(1)}
             </div>
             <div className="text-[10px] text-neutral-600">m/s</div>
@@ -56,12 +51,8 @@ export default function VelocityHUD() {
 
         {/* Depth */}
         <div className="flex flex-col items-center">
-          <div className="text-[9px] tracking-[0.3em] text-neutral-500 uppercase mb-1">
-            Depth
-          </div>
-          <div className="font-mono text-lg text-cyan-400 tabular-nums">
-            {depth}m
-          </div>
+          <div className="text-[9px] tracking-[0.3em] text-neutral-500 uppercase mb-1">Depth</div>
+          <div className="font-mono text-lg text-cyan-400 tabular-nums">{depth}m</div>
         </div>
 
         {/* Divider */}
@@ -69,12 +60,8 @@ export default function VelocityHUD() {
 
         {/* Direction indicator */}
         <div className="flex flex-col items-center min-w-[60px]">
-          <div className="text-[9px] tracking-[0.3em] text-neutral-500 uppercase mb-1">
-            Vector
-          </div>
-          <div
-            className={`font-mono text-sm ${isScrolling ? 'text-white/80' : 'text-white/30'} transition-colors`}
-          >
+          <div className="text-[9px] tracking-[0.3em] text-neutral-500 uppercase mb-1">Vector</div>
+          <div className={`font-mono text-sm ${isScrolling ? 'text-white/80' : 'text-white/30'} transition-colors`}>
             {direction === 1 && '↓ DESC'}
             {direction === -1 && '↑ ASC'}
             {direction === 0 && '— IDLE'}

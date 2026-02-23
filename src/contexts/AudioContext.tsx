@@ -1,19 +1,7 @@
 'use client'
 
-import {
-  createContext,
-  useContext,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type ReactNode,
-} from 'react'
-import {
-  Sequencer,
-  type SequencerState,
-  type SequencerStatus,
-} from '@/components/systems/Sequencer'
+import { createContext, type ReactNode, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { Sequencer, type SequencerState, type SequencerStatus } from '@/components/systems/Sequencer'
 
 // ============================================================================
 // TYPES
@@ -219,7 +207,7 @@ export function useZoneTrigger(
   options?: {
     triggerOnEnter?: boolean
     triggerOnScroll?: boolean
-  }
+  },
 ) {
   const { currentZone, requestTransition } = useAudio()
 

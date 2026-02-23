@@ -1,17 +1,9 @@
 'use client'
 
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-  type ReactNode,
-} from 'react'
-import Lenis from 'lenis'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Lenis from 'lenis'
+import { createContext, type ReactNode, useCallback, useContext, useEffect, useRef, useState } from 'react'
 
 // Register GSAP plugin
 gsap.registerPlugin(ScrollTrigger)
@@ -48,9 +40,7 @@ interface ScrollVelocityContextValue extends ScrollState {
 // CONTEXT
 // ============================================================================
 
-const ScrollVelocityContext = createContext<ScrollVelocityContextValue | null>(
-  null
-)
+const ScrollVelocityContext = createContext<ScrollVelocityContextValue | null>(null)
 
 // ============================================================================
 // PROVIDER
@@ -136,7 +126,7 @@ export function ScrollVelocityProvider({
         isScrolling: true,
       })
     },
-    [maxVelocity]
+    [maxVelocity],
   )
 
   useEffect(() => {
@@ -144,7 +134,7 @@ export function ScrollVelocityProvider({
     // FIGHTER JET config: fast, aggressive, arcade mode
     const lenis = new Lenis({
       duration: 0.5, // Stops fast
-      easing: (t) => 1 - Math.pow(1 - t, 4), // Quartic - quicker response curve
+      easing: (t) => 1 - (1 - t) ** 4, // Quartic - quicker response curve
       orientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 2.5, // TURBO - 2.5x speed per flick
@@ -188,11 +178,7 @@ export function ScrollVelocityProvider({
     lenis: lenisRef.current,
   }
 
-  return (
-    <ScrollVelocityContext.Provider value={contextValue}>
-      {children}
-    </ScrollVelocityContext.Provider>
-  )
+  return <ScrollVelocityContext.Provider value={contextValue}>{children}</ScrollVelocityContext.Provider>
 }
 
 // ============================================================================
@@ -203,9 +189,7 @@ export function useScrollVelocity(): ScrollVelocityContextValue {
   const context = useContext(ScrollVelocityContext)
 
   if (!context) {
-    throw new Error(
-      'useScrollVelocity must be used within a ScrollVelocityProvider'
-    )
+    throw new Error('useScrollVelocity must be used within a ScrollVelocityProvider')
   }
 
   return context

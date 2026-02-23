@@ -4,9 +4,9 @@
 // ============================================================================
 
 export { default as BootSequence } from './BootSequence'
-export { Sequencer, useSequencer } from './Sequencer'
 export type {
+  SequencerCallbacks,
   SequencerState,
   SequencerStatus,
-  SequencerCallbacks,
 } from './Sequencer'
+export { Sequencer, useSequencer } from './Sequencer'

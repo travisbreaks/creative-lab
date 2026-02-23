@@ -267,10 +267,7 @@ export function getMsToNextGrid(currentMs: number): number {
 /**
  * Check if we can skip ahead multiple zones (fast descent)
  */
-export function canFastDescend(
-  currentZoneId: string,
-  targetZoneId: string
-): boolean {
+export function canFastDescend(currentZoneId: string, targetZoneId: string): boolean {
   const currentIndex = getZoneIndex(currentZoneId)
   const targetIndex = getZoneIndex(targetZoneId)
   return targetIndex > currentIndex + 1 // Skipping more than one zone
