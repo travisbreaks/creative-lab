@@ -162,7 +162,7 @@ body {
 ## Dev Commands
 
 ```bash
-cd /Users/travisbonnet/code/CODE/creative-lab
+cd creative-lab
 npm run dev      # Start on localhost:3000
 npm run build    # Production build
 npm run lint     # ESLint
