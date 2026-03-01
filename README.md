@@ -34,3 +34,5 @@ npm run build  # Production build
 
 Part of the [travisBREAKS](https://travisbreaks.org) portfolio.
 
+
+<!-- v1.0.1 -->
