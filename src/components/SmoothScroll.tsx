@@ -40,7 +40,7 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
 
     // Expose lenis globally for debugging
     if (typeof window !== 'undefined') {
-      ;(window as Window & { lenis?: Lenis }).lenis = lenis
+      ;(window as unknown as { lenis?: Lenis }).lenis = lenis
     }
 
     // Cleanup

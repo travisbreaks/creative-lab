@@ -2,7 +2,6 @@
 
 HIGGS-BOSON: a vertical "particle collider" sandbox where the scrollbar controls depth and time. Descend through experimental sectors that react to scroll velocity with physics-driven animations, 3D artifacts, and isotope grids.
 
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://travisbreaks.org/research/creative-lab/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19-61dafb)](https://react.dev)
@@ -33,6 +32,3 @@ npm run build  # Production build
 ---
 
 Part of the [travisBREAKS](https://travisbreaks.org) portfolio.
-
-
-<!-- v1.0.1 -->
